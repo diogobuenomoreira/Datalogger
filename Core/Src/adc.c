@@ -19,10 +19,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "adc.h"
-#include "tim.h"
 
 /* USER CODE BEGIN 0 */
-#define BUFFER_SIZE		(1000000u)
+#include "tim.h"
 
 uint16_t adc_value=0;
 volatile uint16_t data;
@@ -106,7 +105,7 @@ void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_92CYCLES_5;//(92.5 + 12.5 = 105 clk cycles * 1/80 Mhz = 1,3125us
+  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;

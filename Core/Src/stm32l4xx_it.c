@@ -59,7 +59,7 @@ extern DMA_HandleTypeDef hdma_adc1;
 extern TIM_HandleTypeDef htim6;
 extern DMA_HandleTypeDef hdma_usart2_tx;
 /* USER CODE BEGIN EV */
-
+extern uint16_t Timer1, Timer2;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -185,7 +185,14 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
-
+	if(Timer1 > 0)
+	{
+	  Timer1--;
+	}
+	if(Timer2 > 0)
+	{
+	  Timer2--;
+	}
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
@@ -220,11 +227,11 @@ void DMA1_Channel1_IRQHandler(void)
 void DMA1_Channel7_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel7_IRQn 0 */
-
+#ifdef UART_DMA
   /* USER CODE END DMA1_Channel7_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart2_tx);
   /* USER CODE BEGIN DMA1_Channel7_IRQn 1 */
-
+#endif
   /* USER CODE END DMA1_Channel7_IRQn 1 */
 }
 
