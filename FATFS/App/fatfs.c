@@ -109,19 +109,28 @@ void SD_Card_Close(void)
 
 void SD_Card_Write(const uint8_t* data, uint32_t length)
 {
-	FRESULT fres;
-	UINT bytes_written;
+    FRESULT fres;
+    UINT bytes_written;
+    uint32_t offset = 0;
+    const uint32_t block_size = 512;
 
-	fres = f_write(&file, data, (UINT)length, &bytes_written);
-	if((fres != FR_OK) || (bytes_written != length))
-	{
-		DEBUG_PRINTF("File write Error : (%i)\r\n", fres);
-	}
-	else
-	{
-		DEBUG_PRINTF("Written %i bytes \r\n", bytes_written);
-	}
-	f_sync(&file);
+    while (length > 0)
+    {
+        uint32_t bytes_to_write = (length >= block_size) ? block_size : length;
+
+        fres = f_write(&file, data + offset, bytes_to_write, &bytes_written);
+
+        if ((fres != FR_OK) || (bytes_written != bytes_to_write)) {
+            DEBUG_PRINTF("File write Error : (%i)\r\n", fres);
+            break;
+        } else {
+            DEBUG_PRINTF("Written %i bytes \r\n", bytes_written);
+        }
+        length -= bytes_to_write;
+        offset += bytes_to_write;
+    }
+    f_sync(&file);
 }
+
 
 /* USER CODE END Application */
