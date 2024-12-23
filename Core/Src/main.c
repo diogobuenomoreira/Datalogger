@@ -101,14 +101,21 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
   HAL_Delay(200);
-  HAL_TIM_Base_Start(&htim2);
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adc_value, 1);
+  //HAL_TIM_Base_Start(&htim2);
+ // HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adc_value, 1);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint8_t test_data[4096] = {1};
+  //uint8_t test_data[512] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10};
   //process_SD_card();
+  SD_Card_Open();
+  HAL_GPIO_TogglePin(TEST_PIN_PC3_GPIO_Port, TEST_PIN_PC3_Pin);
+  SD_Card_Write(test_data, (uint32_t)(sizeof(test_data)));
+  HAL_GPIO_TogglePin(TEST_PIN_PC3_GPIO_Port, TEST_PIN_PC3_Pin);
+  SD_Card_Close();
   while (1)
   {
     /* USER CODE END WHILE */

@@ -33,13 +33,15 @@
 
 extern uint8_t retUSER; /* Return value for USER */
 extern char USERPath[4]; /* USER logical drive path */
-extern FATFS USERFatFS; /* File system object for USER logical drive */
-extern FIL USERFile; /* File object for USER */
+//extern FATFS USERFatFS; /* File system object for USER logical drive */
+//extern FIL USERFile; /* File object for USER */
 
 void MX_FATFS_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void SD_Card_Open(void);
+void SD_Card_Close(void);
+void SD_Card_Write(const uint8_t* data, uint32_t length);
 /* USER CODE END Prototypes */
 #ifdef __cplusplus
 }
